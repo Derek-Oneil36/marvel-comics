@@ -29,6 +29,29 @@ $charcoal: #ccc;
   background-color: $error;
 }
 
+.comic {
+  background-color: whitesmoke;
+  border: 1px solid #333;
+  border-radius: 10px;
+  height: 250px;
+  margin: 20px;
+  padding: 10px;
+}
+
+.thumbnail-container {
+  float: left;
+  margin: 10px;
+}
+
+.comic-data-container {
+  float: left;
+  margin: 10px;
+}
+
+.comic-thumbnail {
+  width: 150px;
+}
+
 .auth-form {
   display: flex;
   flex-direction: column;

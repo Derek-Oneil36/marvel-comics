@@ -9,6 +9,9 @@ import SignIn from './auth/components/SignIn'
 import SignOut from './auth/components/SignOut'
 import ChangePassword from './auth/components/ChangePassword'
 
+// import ComicIndex from './comic/components/ComicIndex.js'
+import FavoriteIndex from './favorite/components/FavoriteIndex'
+
 class App extends Component {
   constructor () {
     super()
@@ -40,8 +43,8 @@ class App extends Component {
       <React.Fragment>
         <Header user={user} />
         {flashMessage && <h3 className={flashType}>{flashMessage}</h3>}
-        
-        <main className="container">
+
+        <main className='container'>
           <Route path='/sign-up' render={() => (
             <SignUp flash={this.flash} setUser={this.setUser} />
           )} />
@@ -55,6 +58,9 @@ class App extends Component {
             <ChangePassword flash={this.flash} user={user} />
           )} />
         </main>
+
+        <Route exact path="/favorites" component={FavoriteIndex}/>
+
       </React.Fragment>
     )
   }
