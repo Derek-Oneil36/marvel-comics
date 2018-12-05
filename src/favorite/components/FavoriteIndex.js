@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 
-const comic = {
+const punisher = {
   'code': 200,
   'status': 'Ok',
   'copyright': '© 2018 MARVEL',
@@ -181,7 +181,8 @@ class FavoriteIndex extends React.Component {
         </tr>
       )
     })
-
+    const metaData = punisher.data.results[0]
+    const {description, thumbnail, issueNumber, pageCount, dates, prices} = metaData
     return (
       <React.Fragment>
 
@@ -189,7 +190,13 @@ class FavoriteIndex extends React.Component {
 
         <table>
           <tbody>
-            {comicRows}
+            <img className="comic-thumbnail" src={`${thumbnail.path}.${thumbnail.extension}`}/>
+            <h1>{metaData.title}</h1>
+            <p>Description: {description}</p>
+            <p>Issue: {issueNumber}</p>
+            <p>Pages: {pageCount}</p>
+            <p>Date: {new Date(dates[0].date).toLocaleDateString()}</p>
+            <p>Price: ${prices[0].price}</p>
           </tbody>
         </table>
 
