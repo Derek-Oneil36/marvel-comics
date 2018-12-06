@@ -5,7 +5,6 @@ import NewFavorite from '../../favorite/components/NewFavorite'
 
 const PUBLIC_KEY  = '1e8ae23add929fcff17a2a1be0f7aa53'
 const API_URL = 'https://gateway.marvel.com:443/v1/public/characters'
-console.log('key: ', PUBLIC_KEY)
 
 class CharacterIndex extends React.Component {
 
@@ -29,26 +28,25 @@ class CharacterIndex extends React.Component {
         })
         Promise.all(getRequests)
           .then((characters) => {
-            console.log(characters)
+
             this.setState({favorites: characters})
           })
       })
-
+      
       .catch(console.log)
-    console.log('favorites: ', this.state.favorites)
-    console.log('comicIds: ', this.state.comicIds)
+
   }
 
   render() {
 
-    console.log('favorites: ', this.state.favorites[0])
+    c
 
-    const characterRows = this.state.favorites.map(character => {
+    const characterRows = this.state.favorites.map((character, i) => {
       const {id, name, thumbnail, description } = character.data.data.results[0]
-      console.log('id: ', id, 'thumbnail: ', thumbnail)
+
       if (this.props.user){
         return (
-          <tr>
+          <tr key={i}>
             <td>
 
               <h3>{name}</h3>
@@ -61,7 +59,7 @@ class CharacterIndex extends React.Component {
         )
       } else {
         return (
-          <tr key={id}>
+          <tr key={i}>
             <td>
               <h3>{name}</h3>
               <h4>ID: {id}</h4>
@@ -72,7 +70,7 @@ class CharacterIndex extends React.Component {
         )
       }
     })
-    console.log('favorites: ', this.state)
+
 
     return (
       <React.Fragment>
