@@ -251,17 +251,13 @@ class CharacterIndex extends React.Component {
   async componentDidMount() {
 
     const response = await axios.get(`${API_URL}?limit=100&apikey=${PUBLIC_KEY}`)
-    console.log('response: ', response)
     this.setState({characters:response.data.data.results})
-    //   .then(response => {
-    //     this.setState({movies:response.data.movies})
-    //   })
   }
 
   render() {
 
     console.log('user: ',this.props)
-
+    console.log(this.state.characters)
     const characterRows = this.state.characters.map(character => {
       const {id, name, thumbnail, description } = character
       if (this.props.user){
@@ -290,7 +286,6 @@ class CharacterIndex extends React.Component {
         )
       }
     })
-    console.log('characters: ', this.state.characters)
     return (
       <React.Fragment>
 

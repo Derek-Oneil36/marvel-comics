@@ -17,29 +17,38 @@ class CharacterIndex extends React.Component {
 
   async componentDidMount() {
     const token = this.props.user.token
+    const comics = []
+    axios.get('http://localhost:4741/favorites', { headers: { Authorization: `Bearer ${token}` } })
 
-    const comicIds = await axios.get('http://localhost:4741/favorites', { headers: { Authorization: `Bearer ${token}` } })
-    console.log(comicIds)
-    this.setState({comicIds:comicIds.data.favorites.comicId})
-    comicIds.forEach(id => {
-      const response = axios.get(`${API_URL}/${id.id}?apikey=${PUBLIC_KEY}`)
-    })
-    this.setState({favorites:response.data.data.results})
-    //   .then(response => {
-    //     this.setState({movies:response.data.movies})
-    //   })
-    console.log(this.state.comicIds)
+      .then((comicIds) => (this.setState({comicIds:comicIds.data.favorites.map(comic => comic.comicId)})))
+
+      .then(() => {
+        const getRequests = this.state.comicIds.map(id => {
+          return axios.get(`${API_URL}/${id}?apikey=${PUBLIC_KEY}`)
+          // comics.push(response)
+        })
+        Promise.all(getRequests)
+          .then((characters) => {
+            console.log(characters)
+            this.setState({favorites: characters})
+          })
+      })
+
+      .catch(console.log)
+    console.log('favorites: ', this.state.favorites)
+    console.log('comicIds: ', this.state.comicIds)
   }
 
   render() {
 
-    console.log('user: ',this.props)
+    console.log('favorites: ', this.state.favorites[0])
 
     const characterRows = this.state.favorites.map(character => {
-      const {id, name, thumbnail, description } = character
+      const {id, name, thumbnail, description } = character.data.data.results[0]
+      console.log('id: ', id, 'thumbnail: ', thumbnail)
       if (this.props.user){
         return (
-          <tr key={id}>
+          <tr>
             <td>
 
               <h3>{name}</h3>
@@ -63,7 +72,7 @@ class CharacterIndex extends React.Component {
         )
       }
     })
-    console.log('favorites: ', this.state.comicIds)
+    console.log('favorites: ', this.state)
 
     return (
       <React.Fragment>
