@@ -1,6 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import axios from 'axios'
+import API_URL from '../../apiConfig.js'
 
 
 class ShowFavorite extends React.Component {
@@ -18,7 +19,7 @@ class ShowFavorite extends React.Component {
   componentDidMount(){
 
     const id = this.props.match.params.id
-    const response =  axios.get(`http://localhost:4741/favorites/${id}`)
+    const response =  axios.get(`${API_URL}/favorites/${id}`)
     const favorite = response.data.data.results[0]
     this.setState({
       favorite: favorite
