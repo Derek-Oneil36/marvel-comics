@@ -10,8 +10,9 @@ class SignOut extends Component {
 
     signOut(user)
       .finally(() => flash(messages.signOutSuccess, 'flash-success'))
-      .finally(() => history.push('/'))
       .finally(() => clearUser())
+      .finally(() => history.push('/'))
+
   }
 
   render () {
