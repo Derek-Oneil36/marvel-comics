@@ -9,6 +9,7 @@ https://github.com/LightCloud36/marvel-comics-back-end
 * HTML5
 * Axios
 * Express
+* ReactStrap
 * MARVEL API
 
 
