@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import API_URL from '../../apiConfig.js'
 import FavoriteIndex from '../../favorite/components/FavoriteIndex'
 
 
@@ -13,7 +14,7 @@ class DeleteFavorite extends React.Component {
   handleDelete = (event, id) => {
     event.preventDefault()
 
-    const response = axios.delete(`http://localhost:4741/favorites/${id}`)
+    const response = axios.delete(`${API}/favorites/${id}`)
 
     console.log(response)
 
