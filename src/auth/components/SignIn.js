@@ -31,8 +31,25 @@ class SignIn extends Component {
       .then(res => setUser(res.user))
       .then(() => flash(messages.signInSuccess, 'flash-success'))
       .then(() => history.push('/'))
-      .catch(() => flash(messages.signInFailure, 'flash-error'))
+      .catch(() => {
+        flash(messages.signInFailure, 'flash-error')
+        this.setState({
+          email: '',
+          password: ''
+        })
+      })
   }
+
+  // onHandleSubmit = event => {
+  //   event.perventDefault()
+  //
+  //   const { email, password } = this.state
+  //   this.setState({
+  //     email: '',
+  //     password: ''
+  //   })
+  //
+  // }
 
   render () {
     const { email, password } = this.state
@@ -58,7 +75,7 @@ class SignIn extends Component {
           placeholder="Password"
           onChange={this.handleChange}
         />
-        <button type="submit">Sign In</button>
+        <button ontype="submit">Sign In</button>
       </form>
     )
   }

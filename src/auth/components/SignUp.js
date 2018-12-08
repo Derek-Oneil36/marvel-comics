@@ -34,7 +34,14 @@ class SignUp extends Component {
       .then(res => setUser(res.user))
       .then(() => flash(messages.signUpSuccess, 'flash-success'))
       .then(() => history.push('/'))
-      .catch(() => flash(messages.signUpFailure, 'flash-error'))
+      .catch(() => {
+        flash(messages.signUpFailure, 'flash-error')
+        this.setState({
+          email: '',
+          password: '',
+          passwordConfirmation: ''
+        })
+      })
   }
 
   render () {
