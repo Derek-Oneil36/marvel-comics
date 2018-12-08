@@ -1,8 +1,9 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import axios from 'axios'
+import messages from '../messages'
+import { Link } from 'react-router-dom'
 import API_URL from '../../apiConfig.js'
-import AddFavorite from '../../favorite/components/AddFavorite'
+
 
 const PUBLIC_KEY  = '1e8ae23add929fcff17a2a1be0f7aa53'
 const M_API_URL = 'https://gateway.marvel.com:443/v1/public/characters'
@@ -19,7 +20,6 @@ class CharacterIndex extends React.Component {
       },
       'user': this.props.user
     }
-
   }
 
   async componentDidMount() {
@@ -29,10 +29,12 @@ class CharacterIndex extends React.Component {
 
   }
 
-  async handleAdd(event, id) {
-    console.log('event: ', event, 'id: ', id)
-    const token = this.state.user.token
+  // we're taking the event and the character id
+  handleAdd(event, id) {
+    event.preventDefault()
 
+    const { flash } = this.props
+    const token = this.state.user.token
     const favorite = {
       comicId: id
     }
@@ -52,18 +54,7 @@ class CharacterIndex extends React.Component {
     }
 
     apiCreateFavorite(favorite,token)
-    //this.setState(this.state.favorite.comicId: id)
-    // const response = axios.post('http://localhost:4741/favorites',
-    //     { headers: { Authorization: `Bearer ${token}` } })
-    // const response = axios({
-    //   headers: 'Authorization: Bearer ' + token,
-    //   method: 'POST',
-    //   url: 'http://localhost:4741/favorites',
-    //   favorite: {
-    //     comicId: id
-    //   }
-    // })
-    // console.log(response)
+      .then(() => flash(messages.addCharacterSuccess, 'flash-success'))
 
   }
 
@@ -76,7 +67,6 @@ class CharacterIndex extends React.Component {
           <tr key={id}>
             <td>
               <h3>{name}</h3>
-              <h4>ID: {id}</h4>
               <img className="comic-thumbnail" src={`${thumbnail.path}.${thumbnail.extension}`}/>
               <p>Description: {description}</p>
               <button onClick={(event)=> {
@@ -90,9 +80,8 @@ class CharacterIndex extends React.Component {
           <tr key={id}>
             <td>
               <h3>{name}</h3>
-              <h4>ID: {id}</h4>
               <img className="comic-thumbnail" src={`${thumbnail.path}.${thumbnail.extension}`}/>
-              <p>Description: {description}</p>
+              <p>{description}</p>
             </td>
           </tr>
         )

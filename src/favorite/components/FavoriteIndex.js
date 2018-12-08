@@ -1,6 +1,6 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import axios from 'axios'
+import messages from '../messages'
 import API_URL from '../../apiConfig.js'
 import DeleteFavorite from '../../favorite/components/DeleteFavorite'
 
@@ -43,9 +43,10 @@ class CharacterIndex extends React.Component {
 
   }
 
-  async handleDelete(event, id) {
+  handleDelete(event, id) {
     event.preventDefault()
 
+    const { flash } = this.props
     const token = this.state.user.token
 
     const deleteFavorite = (id, token) => {
@@ -58,6 +59,10 @@ class CharacterIndex extends React.Component {
     }
 
     deleteFavorite(id,token)
+      .then(() => history.push('/favorites'))
+      .catch(() => {
+        flash(messages.removeCharacterFailure, 'flash-error')
+      })
 
   }
 
@@ -71,8 +76,7 @@ class CharacterIndex extends React.Component {
       return (
         <tr key={i}>
           <td>
-            <Link to={`/favorites/${id}`}><h3>{name}</h3></Link>
-            <h4>ID: {id}</h4>
+            <h4>{name}</h4>
             <img className="comic-thumbnail" src={`${thumbnail.path}.${thumbnail.extension}`}/>
             <p>Description: {description}</p>
             <button onClick={(event)=> {
@@ -98,7 +102,6 @@ class CharacterIndex extends React.Component {
       </React.Fragment>
     )
   }
-
 }
 
 export default CharacterIndex
