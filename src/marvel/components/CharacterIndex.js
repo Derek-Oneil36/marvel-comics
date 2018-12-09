@@ -59,6 +59,7 @@ class CharacterIndex extends React.Component {
   }
 
   render() {
+
     const characterRows = this.state.characters.map(character => {
       const {id, name, thumbnail, description } = character
 
