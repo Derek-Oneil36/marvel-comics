@@ -106,6 +106,7 @@ class FavoriteIndex extends React.Component {
       <React.Fragment>
 
         <h1>Favorites</h1>
+        <h6>Data provided by Marvel. © 2014 Marvel</h6>
 
         <table>
           <tbody>

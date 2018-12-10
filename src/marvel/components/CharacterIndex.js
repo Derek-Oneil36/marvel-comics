@@ -92,6 +92,7 @@ class CharacterIndex extends React.Component {
       <React.Fragment>
 
         <h1>Character Index</h1>
+        <h6>Data provided by Marvel. © 2014 Marvel</h6>
 
         <table>
           <tbody>
