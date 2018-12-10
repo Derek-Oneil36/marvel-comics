@@ -62,8 +62,19 @@ class FavoriteIndex extends React.Component {
       })
     }
 
+
     deleteFavorite(_id,token)
-      .then(() => history.push('/favorites'))
+      //resets state by clearing and calling DidMount
+      .then(() => {
+        this.setState({
+          favorites: [],
+          comicIds: [],
+          favIds: [],
+          'user': this.props.user
+        })
+        this.componentDidMount()
+      })
+      // throws error if character obj deletion was a failure
       .catch(() => {
         flash(messages.removeCharacterFailure, 'flash-error')
       })
@@ -75,38 +86,28 @@ class FavoriteIndex extends React.Component {
     console.log(this.state)
 
     const characterRows = this.state.favorites.map((character, i) => {
-
-      console.log('character is ', character)
-
       const {id, name, thumbnail, description } = character.data.data.results[0]
-      const characterObj = this.state.comicIds.map((obj) => {
-        const { owner, _id } = obj
+      const { _id } = this.state.comicIds[i]
 
-        console.log('id ', id)
-        console.log('name ', name)
-        console.log('description', description)
-
-        return (
-          <tr key={i}>
-            <td>
-              <p>test</p>
-              <h4>{name}</h4>
-              <img className="comic-thumbnail" src={`${thumbnail.path}.${thumbnail.extension}`}/>
-              <p>{description}</p>
-              <button onClick={(event)=> {
-                return this.handleDelete(event, _id)
-              }}>Remove</button>
-            </td>
-          </tr>
-        )
-      })
+      return (
+        <tr key={i}>
+          <td>
+            <h4>{name}</h4>
+            <img className="comic-thumbnail" src={`${thumbnail.path}.${thumbnail.extension}`}/>
+            <p>{description}</p>
+            <button onClick={(event)=> {
+              return this.handleDelete(event, _id)
+            }}>Remove</button>
+          </td>
+        </tr>
+      )
     })
 
 
     return (
       <React.Fragment>
 
-        <h1>test</h1>
+        <h1>Favorites</h1>
 
         <table>
           <tbody>
