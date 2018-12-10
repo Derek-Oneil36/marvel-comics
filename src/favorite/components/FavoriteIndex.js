@@ -19,7 +19,6 @@ class FavoriteIndex extends React.Component {
   async componentDidMount() {
     const token = this.props.user.token
     const comics = []
-    console.log('get request: ', axios.get(`${API_URL}/favorites`, { headers: { Authorization: `Bearer ${token}` } }))
     axios.get(`${API_URL}/favorites`, { headers: { Authorization: `Bearer ${token}` } })
 
       .then((comicIds) => (this.setState({
@@ -46,8 +45,6 @@ class FavoriteIndex extends React.Component {
 
   handleDelete(event, _id) {
     event.preventDefault()
-    console.log('state info: ',this.props )
-    console.log('user info: ',this.state.user )
 
     const { flash } = this.props
     const token = this.state.user.token
@@ -64,6 +61,7 @@ class FavoriteIndex extends React.Component {
 
 
     deleteFavorite(_id,token)
+
       //resets state by clearing and calling DidMount
       .then(() => {
         this.setState({
@@ -74,6 +72,7 @@ class FavoriteIndex extends React.Component {
         })
         this.componentDidMount()
       })
+      .then(() => flash(messages.removeCharacterSuccess, 'flash-success'))
       // throws error if character obj deletion was a failure
       .catch(() => {
         flash(messages.removeCharacterFailure, 'flash-error')
@@ -83,7 +82,6 @@ class FavoriteIndex extends React.Component {
 
 
   render() {
-    console.log(this.state)
 
     const characterRows = this.state.favorites.map((character, i) => {
       const {id, name, thumbnail, description } = character.data.data.results[0]
