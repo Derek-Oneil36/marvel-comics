@@ -73,15 +73,23 @@ class FavoriteIndex extends React.Component {
 
   render() {
     console.log(this.state)
+
     const characterRows = this.state.favorites.map((character, i) => {
+
+      console.log('character is ', character)
+
       const {id, name, thumbnail, description } = character.data.data.results[0]
       const characterObj = this.state.comicIds.map((obj) => {
         const { owner, _id } = obj
 
+        console.log('id ', id)
+        console.log('name ', name)
+        console.log('description', description)
 
         return (
           <tr key={i}>
             <td>
+              <p>test</p>
               <h4>{name}</h4>
               <img className="comic-thumbnail" src={`${thumbnail.path}.${thumbnail.extension}`}/>
               <p>{description}</p>
@@ -98,7 +106,7 @@ class FavoriteIndex extends React.Component {
     return (
       <React.Fragment>
 
-        <h1>Favorites</h1>
+        <h1>test</h1>
 
         <table>
           <tbody>
