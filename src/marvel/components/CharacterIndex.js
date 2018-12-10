@@ -69,10 +69,10 @@ class CharacterIndex extends React.Component {
             <td>
               <h3>{name}</h3>
               <img className="comic-thumbnail" src={`${thumbnail.path}.${thumbnail.extension}`}/>
-              <p>Description: {description}</p>
+              <p> {description}</p>
               <button onClick={(event)=> {
                 return this.handleAdd(event, id)
-              }}>Add</button>
+              }}>Add to Favorites</button>
             </td>
           </tr>
         )
