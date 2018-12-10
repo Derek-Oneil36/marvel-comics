@@ -19,16 +19,17 @@ class FavoriteIndex extends React.Component {
   async componentDidMount() {
     const token = this.props.user.token
     const comics = []
+    console.log('get request: ', axios.get(`${API_URL}/favorites`, { headers: { Authorization: `Bearer ${token}` } }))
     axios.get(`${API_URL}/favorites`, { headers: { Authorization: `Bearer ${token}` } })
 
       .then((comicIds) => (this.setState({
-        comicIds:comicIds.data.favorites.map(comic => comic.comicId),
-        favIds: comicIds.data.favorites.map(fav => fav._id)
+        comicIds:comicIds.data.favorites.map(comic => comic),
+        favIds: comicIds.data.favorites.map(fav => fav)
       })))
 
       .then(() => {
         const getRequests = this.state.comicIds.map(id => {
-          return axios.get(`${M_API_URL}/${id}?apikey=${PUBLIC_KEY}`)
+          return axios.get(`${M_API_URL}/${id.comicId}?apikey=${PUBLIC_KEY}`)
           // comics.push(response)
         })
 
@@ -50,6 +51,7 @@ class FavoriteIndex extends React.Component {
 
     const { flash } = this.props
     const token = this.state.user.token
+    // const _id = this.state.favIds.filter(id => id === this.state.comicIds )
 
     const deleteFavorite = (_id, token) => {
       return fetch(`${API_URL}/favorites/${_id}`, {
@@ -70,23 +72,26 @@ class FavoriteIndex extends React.Component {
 
 
   render() {
-    const favIds = this.state.favIds
     console.log(this.state)
-    const characterRows = this.state.favorites.map((character, i, favIds) => {
+    const characterRows = this.state.favorites.map((character, i) => {
       const {id, name, thumbnail, description } = character.data.data.results[0]
+      const characterObj = this.state.comicIds.map((obj) => {
+        const { owner, _id } = obj
 
-      return (
-        <tr key={i}>
-          <td>
-            <h4>{name}</h4>
-            <img className="comic-thumbnail" src={`${thumbnail.path}.${thumbnail.extension}`}/>
-            <p>{description}</p>
-            <button onClick={(event)=> {
-              return this.handleDelete(event, id)
-            }}>Remove</button>
-          </td>
-        </tr>
-      )
+
+        return (
+          <tr key={i}>
+            <td>
+              <h4>{name}</h4>
+              <img className="comic-thumbnail" src={`${thumbnail.path}.${thumbnail.extension}`}/>
+              <p>{description}</p>
+              <button onClick={(event)=> {
+                return this.handleDelete(event, _id)
+              }}>Remove</button>
+            </td>
+          </tr>
+        )
+      })
     })
 
 
