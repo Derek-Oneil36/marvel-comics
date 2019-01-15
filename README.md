@@ -53,6 +53,9 @@ Version 2: I want to have character cards that flip to show more info about the 
 9. If a user clicks the change password link, they will be able to update their password.
 10. If the user clicks the sign out link, the user will be signed out and returned back to the home screen where the characters will render without the add button.
 
+# Version 1.1
+![Imgur](https://i.imgur.com/Q1ueRYu.png)
+
 # Version 1.0
 ![Imgur](https://imgur.com/Gt1xsFe.png)
 
