@@ -81,7 +81,7 @@ class CharacterIndex extends React.Component {
     const characterRows = this.state.characters.map(character => {
       const {id, name, thumbnail, description } = character
 
-      if (this.state.user){
+      if (this.state.user && description != ''){
         return (
           <div key={id}>
             <Card>
@@ -89,6 +89,21 @@ class CharacterIndex extends React.Component {
               <img className="comic-thumbnail" src={`${thumbnail.path}.${thumbnail.extension}`}/>
               <CardBody>
                 <CardText>{description}</CardText>
+                <Button onClick={(event)=> {
+                  return this.handleAdd(event, id)
+                }}>Add to Favorites</Button>
+              </CardBody>
+            </Card>
+          </div>
+        )
+      } else if (this.state.user && description == ''){
+        return (
+          <div key={id}>
+            <Card>
+              <CardHeader>{name}</CardHeader>
+              <img className="comic-thumbnail" src={`${thumbnail.path}.${thumbnail.extension}`}/>
+              <CardBody>
+                <CardText>Sorry no description provided at this time</CardText>
                 <Button onClick={(event)=> {
                   return this.handleAdd(event, id)
                 }}>Add to Favorites</Button>

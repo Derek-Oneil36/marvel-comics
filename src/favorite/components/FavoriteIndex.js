@@ -96,22 +96,37 @@ class FavoriteIndex extends React.Component {
       const {id, name, thumbnail, description } = character.data.data.results[0]
       const { _id } = this.state.comicIds[i]
 
-      return (
-        <div key={i}>
-          <Card>
-            <CardHeader>{name}</CardHeader>
-            <img className="comic-thumbnail" src={`${thumbnail.path}.${thumbnail.extension}`}/>
-            <CardBody>
-              <CardText>{description}</CardText>
-              <Button onClick={(event)=> {
-                return this.handleDelete(event, _id)
-              }}>Remove</Button>
-            </CardBody>
-          </Card>
-        </div>
-      )
+      if (description == ''){
+        return (
+          <div key={id}>
+            <Card>
+              <CardHeader>{name}</CardHeader>
+              <img className="comic-thumbnail" src={`${thumbnail.path}.${thumbnail.extension}`}/>
+              <CardBody>
+                <CardText>Sorry no description provided at this time.</CardText>
+                <Button onClick={(event)=> {
+                  return this.handleDelete(event, _id)
+                }}>Remove</Button>
+              </CardBody>
+            </Card>
+          </div>
+        )
+      } else
+        return (
+          <div key={i}>
+            <Card>
+              <CardHeader>{name}</CardHeader>
+              <img className="comic-thumbnail" src={`${thumbnail.path}.${thumbnail.extension}`}/>
+              <CardBody>
+                <CardText>{description}</CardText>
+                <Button onClick={(event)=> {
+                  return this.handleDelete(event, _id)
+                }}>Remove</Button>
+              </CardBody>
+            </Card>
+          </div>
+        )
     })
-
     return (
       <React.Fragment>
         <h3>Favorites</h3>
