@@ -1,19 +1,15 @@
 import React, { Component } from 'react'
 import './App.scss'
 import { Route, Link } from 'react-router-dom'
-
 import AuthenticatedRoute from './auth/components/AuthenticatedRoute'
 import Header from './header/Header'
 import SignUp from './auth/components/SignUp'
 import SignIn from './auth/components/SignIn'
 import SignOut from './auth/components/SignOut'
 import ChangePassword from './auth/components/ChangePassword'
-
-// import ComicIndex from './comic/components/ComicIndex.js'
 import FavoriteIndex from './favorite/components/FavoriteIndex'
-// import MarvelSearch from './marvel/components/MarvelSearch'
 import CharacterIndex from './marvel/components/CharacterIndex'
-import AddFavorite from './favorite/components/AddFavorite'
+
 class App extends Component {
   constructor () {
     super()
@@ -53,9 +49,6 @@ class App extends Component {
           <Route path='/sign-in' render={() => (
             <SignIn flash={this.flash} setUser={this.setUser} />
           )} />
-          <AuthenticatedRoute user={user} path='/favorites/add' render={() => (
-            <AddFavorite flash={this.flash} clearUser={this.clearUser} user={user} />
-          )} />
           <AuthenticatedRoute user={user} path='/sign-out' render={() => (
             <SignOut flash={this.flash} clearUser={this.clearUser} user={user} />
           )} />
@@ -67,7 +60,6 @@ class App extends Component {
         <Route user={user} exact path="/favorites" render={() => (
           <FavoriteIndex flash={this.flash} user={user}/>
         )} />
-
         <Route exact path="/" user={user} render={() => (
           <CharacterIndex flash={this.flash} user={user}/>
         )} />
@@ -76,5 +68,4 @@ class App extends Component {
     )
   }
 }
-// <Route exact path="/" component={MarvelSearch}/>
 export default App

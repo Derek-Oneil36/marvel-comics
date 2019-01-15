@@ -2,7 +2,8 @@ import React from 'react'
 import axios from 'axios'
 import messages from '../messages'
 import API_URL from '../../apiConfig.js'
-import DeleteFavorite from '../../favorite/components/DeleteFavorite'
+import { Card, CardImg, CardHeader, CardText, CardBody,
+  CardTitle, CardSubtitle, Button, Container, Row, Col } from 'reactstrap'
 
 const PUBLIC_KEY  = '1e8ae23add929fcff17a2a1be0f7aa53'
 const M_API_URL = 'https://gateway.marvel.com:443/v1/public/characters'
@@ -16,6 +17,10 @@ class FavoriteIndex extends React.Component {
 
   }
 
+  /*
+  setting the state of our favorites, comicIds, and favIds obj with the data
+  retrieved from Marvel's APi call.
+  */
   async componentDidMount() {
     const token = this.props.user.token
     const comics = []
@@ -43,12 +48,14 @@ class FavoriteIndex extends React.Component {
 
   }
 
+  /* uses the favorite chracter id to delete the chracter
+  from the favorites list when the remove button is clicked.
+  */
   handleDelete(event, _id) {
     event.preventDefault()
 
     const { flash } = this.props
     const token = this.state.user.token
-    // const _id = this.state.favIds.filter(id => id === this.state.comicIds )
 
     const deleteFavorite = (_id, token) => {
       return fetch(`${API_URL}/favorites/${_id}`, {
@@ -73,14 +80,16 @@ class FavoriteIndex extends React.Component {
         this.componentDidMount()
       })
       .then(() => flash(messages.removeCharacterSuccess, 'flash-success'))
-      // throws error if character obj deletion was a failure
       .catch(() => {
         flash(messages.removeCharacterFailure, 'flash-error')
       })
 
   }
 
-
+  /*
+  Favorite character data will render along with the
+  remove from favorites button.
+  */
   render() {
 
     const characterRows = this.state.favorites.map((character, i) => {
@@ -88,32 +97,29 @@ class FavoriteIndex extends React.Component {
       const { _id } = this.state.comicIds[i]
 
       return (
-        <tr key={i}>
-          <td>
-            <h4>{name}</h4>
+        <div key={i}>
+          <Card>
+            <CardHeader>{name}</CardHeader>
             <img className="comic-thumbnail" src={`${thumbnail.path}.${thumbnail.extension}`}/>
-            <p>{description}</p>
-            <button onClick={(event)=> {
-              return this.handleDelete(event, _id)
-            }}>Remove</button>
-          </td>
-        </tr>
+            <CardBody>
+              <CardText>{description}</CardText>
+              <Button onClick={(event)=> {
+                return this.handleDelete(event, _id)
+              }}>Remove</Button>
+            </CardBody>
+          </Card>
+        </div>
       )
     })
 
-
     return (
       <React.Fragment>
-
-        <h1>Favorites</h1>
-        <h6>Data provided by Marvel. © 2014 Marvel</h6>
-
-        <table>
-          <tbody>
-            {characterRows}
-          </tbody>
-        </table>
-
+        <h3>Favorites</h3>
+        <Container>
+          <Row>
+            <Col>{characterRows}</Col>
+          </Row>
+        </Container>
       </React.Fragment>
     )
   }

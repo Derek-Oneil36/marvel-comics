@@ -1,8 +1,11 @@
 import React from 'react'
 import axios from 'axios'
+import '../character.scss'
 import messages from '../messages'
 import { Link } from 'react-router-dom'
 import API_URL from '../../apiConfig.js'
+import { Card, CardImg, CardHeader, CardText, CardBody,
+  CardTitle, CardSubtitle, Button, Container, Row, Col } from 'reactstrap'
 
 
 const PUBLIC_KEY  = '1e8ae23add929fcff17a2a1be0f7aa53'
@@ -22,6 +25,10 @@ class CharacterIndex extends React.Component {
     }
   }
 
+  /*
+  setting the state of our characters obj with the data
+  retrieved from Marvel's APi call.
+  */
   async componentDidMount() {
 
     const response = await axios.get(`${M_API_URL}?limit=100&apikey=${PUBLIC_KEY}`)
@@ -29,7 +36,10 @@ class CharacterIndex extends React.Component {
 
   }
 
-  // we're taking the event and the character id
+  /*
+  Adding the character id to our favorites once the user clicks
+  on the add to favorites button.
+  */
   handleAdd(event, id) {
     event.preventDefault()
 
@@ -39,7 +49,10 @@ class CharacterIndex extends React.Component {
       comicId: id
     }
 
-
+    /*
+     makes an api call to the favorites route on the back-end using
+     the APU_URL and the usre's login token.
+    */
     const apiCreateFavorite = (favorite, token) => {
       return fetch(API_URL+'/favorites', {
         method: 'POST',
@@ -53,11 +66,16 @@ class CharacterIndex extends React.Component {
       })
     }
 
+    // alerts user when a Marvel character is added to their favorites list.
     apiCreateFavorite(favorite,token)
       .then(() => flash(messages.addCharacterSuccess, 'flash-success'))
 
   }
 
+  /*
+  Marvel character data will render. The add to favorites button
+  will render as well, but only if the user is signed into their account.
+  */
   render() {
 
     const characterRows = this.state.characters.map(character => {
@@ -65,41 +83,38 @@ class CharacterIndex extends React.Component {
 
       if (this.state.user){
         return (
-          <tr key={id}>
-            <td>
-              <h3>{name}</h3>
+          <div key={id}>
+            <Card>
+              <CardHeader>{name}</CardHeader>
               <img className="comic-thumbnail" src={`${thumbnail.path}.${thumbnail.extension}`}/>
-              <p> {description}</p>
-              <button onClick={(event)=> {
-                return this.handleAdd(event, id)
-              }}>Add to Favorites</button>
-            </td>
-          </tr>
+              <CardBody>
+                <CardText>{description}</CardText>
+                <Button onClick={(event)=> {
+                  return this.handleAdd(event, id)
+                }}>Add to Favorites</Button>
+              </CardBody>
+            </Card>
+          </div>
         )
       } else {
         return (
-          <tr key={id}>
-            <td>
-              <h3>{name}</h3>
+          <div key={id}>
+            <Card>
+              <CardHeader>{name}</CardHeader>
               <img className="comic-thumbnail" src={`${thumbnail.path}.${thumbnail.extension}`}/>
-              <p>{description}</p>
-            </td>
-          </tr>
+            </Card>
+          </div>
         )
       }
     })
     return (
       <React.Fragment>
-
-        <h1>Character Index</h1>
-        <h6>Data provided by Marvel. © 2014 Marvel</h6>
-
-        <table>
-          <tbody>
-            {characterRows}
-          </tbody>
-        </table>
-
+        <h3>Character Index</h3>
+        <Container>
+          <Row>
+            <Col>{characterRows}</Col>
+          </Row>
+        </Container>
       </React.Fragment>
     )
   }

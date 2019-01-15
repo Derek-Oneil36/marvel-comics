@@ -2,18 +2,15 @@ $charcoal: #bbb;
 
 .main-header {
   align-items: center;
+  border-bottom: 1px solid $charcoal;
   display: flex;
   height: 100px;
   padding: 0 20px;
-  background-color: #d22b2b;
-  box-shadow: 0 0 15px black;
-
 
   a,
   span {
     font-size: 1.2em;
     margin: 0 15px;
-    color: #292b2c;
   }
 }
 
@@ -44,6 +41,7 @@ $charcoal: #bbb;
 
     a,
     span {
+      border: 1px solid $charcoal;
       margin-bottom: 5px;
       text-align: center;
       width: 80%;
