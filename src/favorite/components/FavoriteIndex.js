@@ -88,7 +88,8 @@ class FavoriteIndex extends React.Component {
 
   /*
   Favorite character data will render along with the
-  remove from favorites button.
+  remove from favorites button. If the character doesn't have
+  have a description a default message with be generated.
   */
   render() {
 
@@ -100,7 +101,7 @@ class FavoriteIndex extends React.Component {
         return (
           <div key={id}>
             <Card>
-              <CardHeader>{name}</CardHeader>
+              <CardHeader classname="comic-header">{name}</CardHeader>
               <img className="comic-thumbnail" src={`${thumbnail.path}.${thumbnail.extension}`}/>
               <CardBody>
                 <CardText>Sorry no description provided at this time.</CardText>
@@ -115,7 +116,7 @@ class FavoriteIndex extends React.Component {
         return (
           <div key={i}>
             <Card>
-              <CardHeader>{name}</CardHeader>
+              <CardHeader classname="comic-header">{name}</CardHeader>
               <img className="comic-thumbnail" src={`${thumbnail.path}.${thumbnail.extension}`}/>
               <CardBody>
                 <CardText>{description}</CardText>

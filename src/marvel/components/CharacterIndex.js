@@ -73,8 +73,10 @@ class CharacterIndex extends React.Component {
   }
 
   /*
-  Marvel character data will render. The add to favorites button
-  will render as well, but only if the user is signed into their account.
+  Marvel character data will render without a desctiption if
+  the user is not signed in. The characters description will render when
+  the user is signed in along with the add to favorites button. If the character
+  doesn't have a description a default message with be generated.
   */
   render() {
 
@@ -85,7 +87,7 @@ class CharacterIndex extends React.Component {
         return (
           <div key={id}>
             <Card>
-              <CardHeader>{name}</CardHeader>
+              <CardHeader classname="comic-header">{name}</CardHeader>
               <img className="comic-thumbnail" src={`${thumbnail.path}.${thumbnail.extension}`}/>
               <CardBody>
                 <CardText>{description}</CardText>
@@ -100,10 +102,10 @@ class CharacterIndex extends React.Component {
         return (
           <div key={id}>
             <Card>
-              <CardHeader>{name}</CardHeader>
+              <CardHeader classname="comic-header">{name}</CardHeader>
               <img className="comic-thumbnail" src={`${thumbnail.path}.${thumbnail.extension}`}/>
               <CardBody>
-                <CardText>Sorry no description provided at this time</CardText>
+                <CardText>Sorry no description provided at this time.</CardText>
                 <Button onClick={(event)=> {
                   return this.handleAdd(event, id)
                 }}>Add to Favorites</Button>
@@ -115,7 +117,7 @@ class CharacterIndex extends React.Component {
         return (
           <div key={id}>
             <Card>
-              <CardHeader>{name}</CardHeader>
+              <CardHeader classname="comic-header">{name}</CardHeader>
               <img className="comic-thumbnail" src={`${thumbnail.path}.${thumbnail.extension}`}/>
             </Card>
           </div>
